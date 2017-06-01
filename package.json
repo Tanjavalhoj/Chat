@@ -1,0 +1,15 @@
+{
+  "name": "chat-site",
+  "version": "1.0.0",
+  "description": "proof of contest of chat",
+  "main": "server.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Tanja Valhøj Olsen",
+  "license": "ISC",
+  "dependencies": {
+    "ejs": "*",
+    "express": "*"
+  }
+}
