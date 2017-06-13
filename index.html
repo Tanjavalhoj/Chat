@@ -71,9 +71,12 @@
         var $users = $('#users');
         var $username = $('#username');
 
+        /*Tager fat i messageForm id og dets indhold, og submitter, så tager socket fat i 'send message' functionen
+        fra socket.js og sender den med det der står i textarea med id som message. og derefter clear den message
+        så den er klar til at kunne skrives i, igen. */
         $messageForm.submit(function(e){
           e.preventDefault();
-          console.log('submitted '); //Testing
+          console.log('submitted '); //Testing - Bruges til at teste om tingene går igennem. Fejl søgning
           socket.emit('send message', $message.val());
          $message.val('');
       });
