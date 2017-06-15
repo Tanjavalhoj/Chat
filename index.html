@@ -3,9 +3,18 @@
   <title>Proof of conpect in chat</title>
 
   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css">
-  <!--<link rel="stylesheet" href="style.css">-->
+  <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css" rel="stylesheet">
+
+  <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css" rel="stylesheet">
+  <link href="emoji-picker-master/lib/css/emoji.css" rel="stylesheet">
+
   <script src="http://code.jquery.com/jquery-latest.min.js"></script>
   <script src="/socket.io/socket.io.js"></script>
+
+  <script src="emoji-picker-master/lib/js/config.js"></script>
+  <script src="emoji-picker-master/lib/js/util.js"></script>
+  <script src="emoji-picker-master/lib/js/jquery.emojiarea.js"></script>
+  <script src="emoji-picker-master/lib/js/emoji-picker.js"></script>
 
   <style>
     body{
@@ -49,7 +58,7 @@
         <form id="messageForm">
           <div class="form-group">
             <label>Enter message</label>
-            <textarea class="form-control" id="message"></textarea>
+            <textarea class="form-control" id="message" data-emojiable="true"></textarea>
             <br />
             <input type="submit" class="btn btn-primary" value="send message"/>
           </div>
