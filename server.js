@@ -5,15 +5,22 @@ var io = require('socket.io').listen(server);
 users = [];
 connections = [];
 
+//Kører serveren på hvad der er på enviroment variable PORT eller port 3000 --> 3000 i mit tilfælde
 server.listen(process.env.port || 3000);
-console.log('server is running....'); //Testing
+console.log('server is running....'); //Testing Dukker op i nodes cmd når den kører
 
-
-app.get('/', function(reg,res){
+/*Laver en rute som er hjemmesiden eller /. Når man besøger den kører den en finction
+Som har et request og respons. response er at den sender fil med __dirname returns the directory that the
+currently executing script is in
+Og den sender /index.html med, fordi det er i den fil.*/
+app.get('/', function(req,res){
     res.sendFile(__dirname + '/index.html');
 });
 
+
 //Socket connection
+/*Tager connections array'et .push fordi vi gerne vil tilføje den til socket
+ %s er antal sockets*/
 io.sockets.on('connection',function(socket){
     connections.push(socket);
     console.log('connected: %s sockets connected', connections.length); //Testing
