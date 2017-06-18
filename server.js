@@ -19,28 +19,39 @@ app.get('/', function(req,res){
 
 
 //Socket connection
+// Åbner en connection med socket.io, .on betyder event
 /*Tager connections array'et .push fordi vi gerne vil tilføje den til socket
  %s er antal sockets*/
 io.sockets.on('connection',function(socket){
     connections.push(socket);
-    console.log('connected: %s sockets connected', connections.length); //Testing
+    console.log('Connected: %s sockets connected', connections.length); //Testing
+
 
   //Disconnect
+    /* påsætter 'disconnect' functionen på socket, derefter bliver username fjernet fra users array, via splice
+    * så bliver usernames opdateret, derefter bliver den socket forbindelse fjernet fra connections array
+    * i cmd, fortæller den at der er en der er disconnected og --antal-- sockets er connected*/
 socket.on('disconnect', function(data){
     users.splice(users.indexOf(socket.username), 1);
     updateUsernames();
     connections.splice(connections.indexOf(socket), 1);
-    console.log('Disconnected: %s sockets connected ', connections.length ); //TElls how many there are stil connected
+    console.log('Disconnected: %s sockets connected ', connections.length ); //antal connected
 
   });
 
   // Send message
+    /* påsætter 'send message' function på socket, der bliver lavet et socket event der hedder 'send message'
+    som bliver sendt til alle aktive clients
+     * og den event indeholder message og username */
   socket.on('send message', function(data){
       console.log(data); //Testing
       io.sockets.emit('new message',{msg: data, user: socket.username});
   });
 
   //New User
+    /* påsætter 'new user' function på socket, med data og callback objekt. callback bliver sat til true
+    * username der kaldes fra socket, bliver til data
+    * der bliver tilføjet den nye user (username) til users array, og usernames bliver opdateret*/
     socket.on('new user', function(data, callback){
         callback(true);
         socket.username = data;
@@ -48,6 +59,7 @@ socket.on('disconnect', function(data){
         updateUsernames();
     });
 
+    // laver et socket event, der hedder 'get users' og som inde holder users
     function updateUsernames(){
         io.sockets.emit('get users', users);
     }

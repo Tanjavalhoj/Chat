@@ -80,23 +80,28 @@
         var $users = $('#users');
         var $username = $('#username');
 
+
         /*Tager fat i messageForm id og dets indhold, og submitter, så tager socket fat i 'send message' functionen
         fra socket.js og sender den med det der står i textarea med id som message. og derefter clear den message
         så den er klar til at kunne skrives i, igen. */
         $messageForm.submit(function(e){
           e.preventDefault();
-          console.log('submitted '); //Testing - Bruges til at teste om tingene går igennem. Fejl søgning
+          console.log('submitted '); // Fejl søgning
           socket.emit('send message', $message.val());
          $message.val('');
       });
-        //
+        /*laver en function på 'snew message' der appender alt hvad der står i well, som er brugernavn og den
+        besked der bliver sendt med. <strong> betyder at skriften bliver fed*/
       socket.on('new message', function(data){
         $chat.append('<div class="well"><strong>'+data.user+'</strong>: '+data.msg+'</div>');
       });
 
+      /*når man submitter userform, (login) bliver der sendte et event ud (emit) til alle aktive clients, event
+       * kan ses i server.js. så tager den value af username, og laver en function der gør at hvis der er data
+       * så skjuler den userFormArea, men vider messageArea. Og bagefter sætter username value til blank*/
       $userForm.submit(function(e){
         e.preventDefault();
-        console.log('submitted '); //Testing
+        console.log('submitted '); //Fejl søgning
         socket.emit('new user', $username.val(), function(data){
             if(data){
                 $userFormArea.hide();
@@ -106,6 +111,11 @@
         $username.val('');
       });
 
+      /*Den sætter en event function ved 'get users'. Denne function har users tom til at starte med
+       * Der efter løber den listen igennem, og siger hvis den er data er større end i, så skal den pludses med 1
+         * og hvis dette er tilfældet så skal html pludses og skal blive en string, som indeholder
+         * list-group-item og den data (de online users) der er. og det hele bliver sat ind i en liste
+         * til sidst kalder users, html som indeholder listen der lige er lavet*/
       socket.on('get users', function(data){
           var html = "";
           for(i = 0; i < data.length; i++){
